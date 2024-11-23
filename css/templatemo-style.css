@@ -131,7 +131,7 @@ body { overflow-x: hidden; }
 	height: 50px;
 }
 
-/* Section 1, index.html */
+/* Section 1, index.php */
 .tm-gray-bg { background-color: #E5E5E5; }
 .tm-home-section-1 {
 	position: relative;
@@ -140,8 +140,12 @@ body { overflow-x: hidden; }
 .form-control {	border-radius: 0; }
 .form-control:focus {
 	border-color: #FCDD44;
+}
+
+.form-control:focus {
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(252, 221, 68, 0.6);
 }
+
 .tm-yellow-gradient-bg {
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f5d11d+0,f3d10e+1,efcf1c+2,fccd0d+4,f7ca0d+5,f9cb1e+6,f7cb10+7,f8cc14+8,f0c40c+54,edc50c+55,e9c108+71,ecc008+78,e6be06+91,e9bd06+93,e8bc06+100 */
 	background: #f5d11d; /* Old browsers */ /* FF3.6+ */ /* Chrome,Safari4+ */ /* Chrome10+,Safari5.1+ */ /* Opera 11.10+ */ /* IE10+ */
@@ -232,7 +236,7 @@ body { overflow-x: hidden; }
 	background-color: #fff;
 }
 .tm-home-box-1 {
-	width: 346px;
+	width: 100%;
 	height: 436px;
 }
 .tm-home-box-1-center {
@@ -293,8 +297,8 @@ body { overflow-x: hidden; }
 
 .hotel-search-form .form-group { margin-bottom: 30px; }
 
-/*Section 2, index.html */
-.section-margin-top { margin-top: 100px; }
+/*Section 2, index.php */
+.section-margin-top { margin-top: 50px; }
 hr { border-top: 1px solid #111010; }
 .tm-section-header {
 	margin-bottom: 70px;
@@ -309,6 +313,7 @@ hr { border-top: 1px solid #111010; }
 .tm-home-box-2 {
 	background-color: white;
 	max-width: 254px;
+	margin: 0 auto 30px;
 }
 .tm-home-box-2 h3 {
 	font-size: 14px;
@@ -662,8 +667,8 @@ hr { border-top: 1px solid #111010; }
 	.tm-banner-subtitle { font-size: 30px; }
 	.tm-home-section-1 { top: -20px; }
 	.tm-home-box-1 {
-		width: 300px;
-		height: 388px;
+		width: 100%;
+		/*height: 388px;*/
 	}
 	.hotel-search-form .form-group { margin-bottom: 18px; }
 	.tm-home-box-2-description { padding-bottom: 15px; }
@@ -720,7 +725,7 @@ hr { border-top: 1px solid #111010; }
 @media screen and (max-width: 991px) {
 	.tm-home-box-1 {
 		margin-bottom: 50px;
-		width: 346px;
+		width: 100%;
 		height: 436px;
 	}
 	.tm-home-box-2 { margin: 0 auto 30px; }
@@ -900,4 +905,11 @@ hr { border-top: 1px solid #111010; }
 
 @media screen and (max-width: 400px) {
 	.tm-section-title {	font-size: 28px; }
+}
+
+.product-image {
+	height: 185px;
+	width: 254px;
+	background-position: center center;
+	background-repeat: no-repeat;
 }
