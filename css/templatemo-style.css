@@ -131,7 +131,7 @@ body { overflow-x: hidden; }
 	height: 50px;
 }
 
-/* Section 1, index.php */
+/* Section 1, products.php */
 .tm-gray-bg { background-color: #E5E5E5; }
 .tm-home-section-1 {
 	position: relative;
@@ -297,7 +297,7 @@ body { overflow-x: hidden; }
 
 .hotel-search-form .form-group { margin-bottom: 30px; }
 
-/*Section 2, index.php */
+/*Section 2, products.php */
 .section-margin-top { margin-top: 50px; }
 hr { border-top: 1px solid #111010; }
 .tm-section-header {
@@ -351,7 +351,7 @@ hr { border-top: 1px solid #111010; }
 .tm-home-box-2-description {
 	display: inline-block;
 	text-align: center;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	width: 125px;
 	padding-bottom: 18px;
 }
