@@ -7,6 +7,7 @@ $servername = "localhost";
 $username = "test";
 $password = "password";
 $dbname = "simplikart";
+$i = 1;
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

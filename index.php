@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Holiday - Tours</title>
+  <title>Simplikart</title>
 <!--
 Holiday Template
 http://www.templatemo.com/tm-475-holiday
@@ -24,6 +24,7 @@ http://www.templatemo.com/tm-475-holiday
     <![endif]-->
 
   </head>
+/** @noinspection ALL *//** @noinspection PhpUndefinedVariableInspection */<? include("includes/config.php");?>
   <body class="tm-gray-bg">
   	<!-- Header -->
   	<div class="tm-header">
@@ -80,21 +81,39 @@ http://www.templatemo.com/tm-475-holiday
 		</div>			
 	</section>
 
+    <style>
+        @media (min-width: 992px) {
+            .container {
+                width: 970px;
+            }
+    </style>
+
 	<!-- gray bg -->	
 	<section class="container tm-home-section-1" id="more">
 		<div class="row">
 
+            <?
+            $sql = "SELECT DISTINCT type FROM `products`";
+            $result = mysqli_query($conn, $sql);
+            $num = mysqli_num_rows($result);
+
+            for ($i = 0; $i < $num; $i++) {
+                $type = mysqli_fetch_assoc($result);
+            ?>
             <div class="col-lg-4 col-md-4 col-sm-6">
                 <div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-center">
                     <img src="img/index-01.jpg" alt="image" class="img-responsive">
                     <a href="#">
                         <div class="tm-green-gradient-bg tm-city-price-container">
-                            <span>Electronics</span>
-<!--                            <span>$6,600</span>-->
+                            <span><?= $type['type'] ?></span>
+                            <!--                            <span>$6,600</span>-->
                         </div>
                     </a>
                 </div>
             </div>
+            <?
+            }
+            ?>
 			<div class="col-lg-4 col-md-4 col-sm-6">
 				<div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-center">
 					<img src="img/index-01.jpg" alt="image" class="img-responsive">
@@ -115,17 +134,6 @@ http://www.templatemo.com/tm-475-holiday
 					</a>
 				</div>
 			</div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-center">
-                    <img src="img/index-01.jpg" alt="image" class="img-responsive">
-                    <a href="#">
-                        <div class="tm-green-gradient-bg tm-city-price-container">
-                            <span>Electronics</span>
-                            <!--                            <span>$6,600</span>-->
-                        </div>
-                    </a>
-                </div>
-            </div>
             <div class="col-lg-4 col-md-4 col-sm-6">
 
                 <div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-center">
