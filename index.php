@@ -24,14 +24,14 @@ http://www.templatemo.com/tm-475-holiday
     <![endif]-->
 
   </head>
-/** @noinspection ALL *//** @noinspection PhpUndefinedVariableInspection */<? include("includes/config.php");?>
+<? include("includes/config.php");?>
   <body class="tm-gray-bg">
   	<!-- Header -->
   	<div class="tm-header">
   		<div class="container">
   			<div class="row">
   				<div class="col-lg-6 col-md-4 col-sm-3 tm-site-name-container">
-  					<a href="#" class="tm-site-name">Holiday</a>	
+  					<a href="#" class="tm-site-name">Simplikart</a>
   				</div>
 	  			<div class="col-lg-6 col-md-8 col-sm-9">
 	  				<div class="mobile-menu-icon">
@@ -39,8 +39,8 @@ http://www.templatemo.com/tm-475-holiday
 		            </div>
 	  				<nav class="tm-nav">
 						<ul>
-                            <li><a href="products.php" class="active">Home</a></li>
-                            <li><a href="index.php">All Products</a></li>
+                            <li><a href="index.php" class="active">Home</a></li>
+                            <li><a href="products.php">All Products</a></li>
 						</ul>
 					</nav>		
 	  			</div>				
@@ -93,20 +93,38 @@ http://www.templatemo.com/tm-475-holiday
 		<div class="row">
 
             <?
+
+
             $sql = "SELECT DISTINCT type FROM `products`";
             $result = mysqli_query($conn, $sql);
             $num = mysqli_num_rows($result);
 
+
             for ($i = 0; $i < $num; $i++) {
-                $type = mysqli_fetch_assoc($result);
+                $result1 = mysqli_fetch_assoc($result);
+                $type = $result1["type"];
+                $chosenColor = $i % 3;
+                $color = '';
+
+                switch ($chosenColor) {
+                    case 0:
+                        $color = 'red';
+                        break;
+                    case 1:
+                        $color = 'green';
+                        break;
+                    case 2:
+                        $color = 'yellow';
+                        break;
+                }
             ?>
-            <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="col-lg-4 col-md-4 col-sm-6" style="margin-top: 75px">
                 <div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-center">
-                    <img src="img/index-01.jpg" alt="image" class="img-responsive">
-                    <a href="#">
-                        <div class="tm-green-gradient-bg tm-city-price-container">
-                            <span><?= $type['type'] ?></span>
-                            <!--                            <span>$6,600</span>-->
+                    <img src="img/products/categories/<?=$type?>.jpg" alt="image" class="img-responsive"
+                    style="object-fit: cover; height: 180px; width: 100%;">
+                    <a href="products.php?type=<?=$type?>">
+                        <div class="tm-<?=$color?>-gradient-bg tm-city-price-container">
+                            <span><?= $type ?></span>
                         </div>
                     </a>
                 </div>
@@ -114,151 +132,108 @@ http://www.templatemo.com/tm-475-holiday
             <?
             }
             ?>
-			<div class="col-lg-4 col-md-4 col-sm-6">
-				<div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-center">
-					<img src="img/index-01.jpg" alt="image" class="img-responsive">
-					<a href="#">
-						<div class="tm-yellow-gradient-bg tm-city-price-container">
-							<span>New York</span>
-						</div>
-					</a>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-4 col-sm-6">
-				<div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-right">
-					<img src="img/index-02.jpg" alt="image" class="img-responsive">
-					<a href="#">
-						<div class="tm-red-gradient-bg tm-city-price-container">
-							<span>Paris</span>
-						</div>
-					</a>
-				</div>
-			</div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-
-                <div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-center">
-                    <img src="img/index-01.jpg" alt="image" class="img-responsive">
-                    <a href="#">
-                        <div class="tm-yellow-gradient-bg tm-city-price-container">
-                            <span>New York</span>
-                            <span>$6,600</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-right">
-                    <img src="img/index-02.jpg" alt="image" class="img-responsive">
-                    <a href="#">
-                        <div class="tm-red-gradient-bg tm-city-price-container">
-                            <span>Paris</span>
-                            <span>$4,200</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
 		</div>
 
 	
-		<div class="section-margin-top">
-			<div class="row">				
-				<div class="tm-section-header">
-					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
-					<div class="col-lg-6 col-md-6 col-sm-6"><h2 class="tm-section-title">Our Tours</h2></div>
-					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>	
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<div class="tm-tours-box-1">
-						<img src="img/tours-03.jpg" alt="image" class="img-responsive">
-						<div class="tm-tours-box-1-info">
-							<div class="tm-tours-box-1-info-left">
-								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	
-								<p class="gray-text">28 March 2084</p>
-							</div>
-							<div class="tm-tours-box-1-info-right">
-								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	
-							</div>							
-						</div>
-						<div class="tm-tours-box-1-link">
-							<div class="tm-tours-box-1-link-left">
-								Duration: 8 days
-							</div>
-							<a href="#" class="tm-tours-box-1-link-right">
-								$2,200								
-							</a>							
-						</div>
-					</div>					
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<div class="tm-tours-box-1">
-						<img src="img/tours-04.jpg" alt="image" class="img-responsive">
-						<div class="tm-tours-box-1-info">
-							<div class="tm-tours-box-1-info-left">
-								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	
-								<p class="gray-text">26 March 2084</p>
-							</div>
-							<div class="tm-tours-box-1-info-right">
-								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	
-							</div>							
-						</div>
-						<div class="tm-tours-box-1-link">
-							<div class="tm-tours-box-1-link-left">
-								Duration: 9 days
-							</div>
-							<a href="#" class="tm-tours-box-1-link-right">
-								$1,800								
-							</a>							
-						</div>
-					</div>					
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<div class="tm-tours-box-1">
-						<img src="img/tours-05.jpg" alt="image" class="img-responsive">
-						<div class="tm-tours-box-1-info">
-							<div class="tm-tours-box-1-info-left">
-								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	
-								<p class="gray-text">24 March 2084</p>
-							</div>
-							<div class="tm-tours-box-1-info-right">
-								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	
-							</div>							
-						</div>
-						<div class="tm-tours-box-1-link">
-							<div class="tm-tours-box-1-link-left">
-								Duration: 8 days
-							</div>
-							<a href="#" class="tm-tours-box-1-link-right">
-								$1,600								
-							</a>							
-						</div>
-					</div>					
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<div class="tm-tours-box-1">
-						<img src="img/tours-06.jpg" alt="image" class="img-responsive">
-						<div class="tm-tours-box-1-info">
-							<div class="tm-tours-box-1-info-left">
-								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	
-								<p class="gray-text">22 March 2084</p>
-							</div>
-							<div class="tm-tours-box-1-info-right">
-								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	
-							</div>							
-						</div>
-						<div class="tm-tours-box-1-link">
-							<div class="tm-tours-box-1-link-left">
-								Duration: 5 days
-							</div>
-							<a href="#" class="tm-tours-box-1-link-right">
-								$1,200								
-							</a>							
-						</div>
-					</div>					
-				</div>
-			</div>		
-		</div>
+<!--		<div class="section-margin-top">-->
+<!--			<div class="row">				-->
+<!--				<div class="tm-section-header">-->
+<!--					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>-->
+<!--					<div class="col-lg-6 col-md-6 col-sm-6"><h2 class="tm-section-title">Our Tours</h2></div>-->
+<!--					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>	-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="row">-->
+<!--				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--					<div class="tm-tours-box-1">-->
+<!--						<img src="img/tours-03.jpg" alt="image" class="img-responsive">-->
+<!--						<div class="tm-tours-box-1-info">-->
+<!--							<div class="tm-tours-box-1-info-left">-->
+<!--								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	-->
+<!--								<p class="gray-text">28 March 2084</p>-->
+<!--							</div>-->
+<!--							<div class="tm-tours-box-1-info-right">-->
+<!--								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	-->
+<!--							</div>							-->
+<!--						</div>-->
+<!--						<div class="tm-tours-box-1-link">-->
+<!--							<div class="tm-tours-box-1-link-left">-->
+<!--								Duration: 8 days-->
+<!--							</div>-->
+<!--							<a href="#" class="tm-tours-box-1-link-right">-->
+<!--								$2,200								-->
+<!--							</a>							-->
+<!--						</div>-->
+<!--					</div>					-->
+<!--				</div>-->
+<!--				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--					<div class="tm-tours-box-1">-->
+<!--						<img src="img/tours-04.jpg" alt="image" class="img-responsive">-->
+<!--						<div class="tm-tours-box-1-info">-->
+<!--							<div class="tm-tours-box-1-info-left">-->
+<!--								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	-->
+<!--								<p class="gray-text">26 March 2084</p>-->
+<!--							</div>-->
+<!--							<div class="tm-tours-box-1-info-right">-->
+<!--								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	-->
+<!--							</div>							-->
+<!--						</div>-->
+<!--						<div class="tm-tours-box-1-link">-->
+<!--							<div class="tm-tours-box-1-link-left">-->
+<!--								Duration: 9 days-->
+<!--							</div>-->
+<!--							<a href="#" class="tm-tours-box-1-link-right">-->
+<!--								$1,800								-->
+<!--							</a>							-->
+<!--						</div>-->
+<!--					</div>					-->
+<!--				</div>-->
+<!--				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--					<div class="tm-tours-box-1">-->
+<!--						<img src="img/tours-05.jpg" alt="image" class="img-responsive">-->
+<!--						<div class="tm-tours-box-1-info">-->
+<!--							<div class="tm-tours-box-1-info-left">-->
+<!--								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	-->
+<!--								<p class="gray-text">24 March 2084</p>-->
+<!--							</div>-->
+<!--							<div class="tm-tours-box-1-info-right">-->
+<!--								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	-->
+<!--							</div>							-->
+<!--						</div>-->
+<!--						<div class="tm-tours-box-1-link">-->
+<!--							<div class="tm-tours-box-1-link-left">-->
+<!--								Duration: 8 days-->
+<!--							</div>-->
+<!--							<a href="#" class="tm-tours-box-1-link-right">-->
+<!--								$1,600								-->
+<!--							</a>							-->
+<!--						</div>-->
+<!--					</div>					-->
+<!--				</div>-->
+<!--				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
+<!--					<div class="tm-tours-box-1">-->
+<!--						<img src="img/tours-06.jpg" alt="image" class="img-responsive">-->
+<!--						<div class="tm-tours-box-1-info">-->
+<!--							<div class="tm-tours-box-1-info-left">-->
+<!--								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	-->
+<!--								<p class="gray-text">22 March 2084</p>-->
+<!--							</div>-->
+<!--							<div class="tm-tours-box-1-info-right">-->
+<!--								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	-->
+<!--							</div>							-->
+<!--						</div>-->
+<!--						<div class="tm-tours-box-1-link">-->
+<!--							<div class="tm-tours-box-1-link-left">-->
+<!--								Duration: 5 days-->
+<!--							</div>-->
+<!--							<a href="#" class="tm-tours-box-1-link-right">-->
+<!--								$1,200								-->
+<!--							</a>							-->
+<!--						</div>-->
+<!--					</div>					-->
+<!--				</div>-->
+<!--			</div>		-->
+<!--		</div>-->
 	</section>		
 	
 	<!-- white bg -->
@@ -329,7 +304,7 @@ http://www.templatemo.com/tm-475-holiday
 	<footer class="tm-black-bg">
 		<div class="container">
 			<div class="row">
-				<p class="tm-copyright-text">Copyright &copy; 2084 Your Company Name</p>
+				<p class="tm-copyright-text">Copyright &copy; 2024 Digital Enigma</p>
 			</div>
 		</div>		
 	</footer>

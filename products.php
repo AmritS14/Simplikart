@@ -28,7 +28,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-6 col-md-4 col-sm-3 tm-site-name-container">
-				<a href="#" class="tm-site-name">Holiday</a>
+				<a href="#" class="tm-site-name">Simplikart</a>
 			</div>
 			<div class="col-lg-6 col-md-8 col-sm-9">
 				<div class="mobile-menu-icon">
@@ -36,8 +36,8 @@
 				</div>
 				<nav class="tm-nav">
 					<ul>
-						<li><a href="products.php" class="active">Home</a></li>
-						<li><a href="index.php">All Products</a></li>
+						<li><a href="index.php">Home</a></li>
+						<li><a href="products.php" class="active">All Products</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -46,41 +46,44 @@
 </div>
 
 <!-- Banner -->
-<section class="tm-banner">
-	<!-- Flexslider -->
-	<div class="flexslider flexslider-banner">
-	  <ul class="slides">
-		<li>
-			<div class="tm-banner-inner">
-				<h1 class="tm-banner-title">Find <span class="tm-yellow-text">The Best</span> Place</h1>
-				<p class="tm-banner-subtitle">For Your Holidays</p>
-				<a href="#more" class="tm-banner-link">Learn More</a>
-			</div>
-			<img src="img/banner-1.jpg" alt="Image" />
-		</li>
-		<li>
-			<div class="tm-banner-inner">
-				<h1 class="tm-banner-title">Lorem <span class="tm-yellow-text">Ipsum</span> Dolor</h1>
-				<p class="tm-banner-subtitle">Wonderful Destinations</p>
-				<a href="#more" class="tm-banner-link">Learn More</a>
-			</div>
-		  <img src="img/banner-2.jpg" alt="Image" />
-		</li>
-		<li>
-			<div class="tm-banner-inner">
-				<h1 class="tm-banner-title">Proin <span class="tm-yellow-text">Gravida</span> Nibhvell</h1>
-				<p class="tm-banner-subtitle">Velit Auctor</p>
-				<a href="#more" class="tm-banner-link">Learn More</a>
-			</div>
-		  <img src="img/banner-3.jpg" alt="Image" />
-		</li>
-	  </ul>
-	</div>
-</section>
+<!--<section class="tm-banner">-->
+<!--	<div class="flexslider flexslider-banner">-->
+<!--	  <ul class="slides">-->
+<!--		<li>-->
+<!--			<div class="tm-banner-inner">-->
+<!--				<h1 class="tm-banner-title">Find <span class="tm-yellow-text">The Best</span> Place</h1>-->
+<!--				<p class="tm-banner-subtitle">For Your Holidays</p>-->
+<!--				<a href="#more" class="tm-banner-link">Learn More</a>-->
+<!--			</div>-->
+<!--			<img src="img/banner-1.jpg" alt="Image" />-->
+<!--		</li>-->
+<!--		<li>-->
+<!--			<div class="tm-banner-inner">-->
+<!--				<h1 class="tm-banner-title">Lorem <span class="tm-yellow-text">Ipsum</span> Dolor</h1>-->
+<!--				<p class="tm-banner-subtitle">Wonderful Destinations</p>-->
+<!--				<a href="#more" class="tm-banner-link">Learn More</a>-->
+<!--			</div>-->
+<!--		  <img src="img/banner-2.jpg" alt="Image" />-->
+<!--		</li>-->
+<!--		<li>-->
+<!--			<div class="tm-banner-inner">-->
+<!--				<h1 class="tm-banner-title">Proin <span class="tm-yellow-text">Gravida</span> Nibhvell</h1>-->
+<!--				<p class="tm-banner-subtitle">Velit Auctor</p>-->
+<!--				<a href="#more" class="tm-banner-link">Learn More</a>-->
+<!--			</div>-->
+<!--		  <img src="img/banner-3.jpg" alt="Image" />-->
+<!--		</li>-->
+<!--	  </ul>-->
+<!--	</div>-->
+<!--</section>-->
 
 <!-- gray bg -->
 <section class="container tm-home-section-1" id="more" >
-	<div class="row">
+    <?
+    $type = isset($_GET['type']) ? $_GET['type'] : '';
+    $hidden = ($type == '') ? 'hidden' : '';
+    ?>
+	<div class="row <?=$hidden?>">
 		<div class="col-lg-12 col-md-12 col-sm-12">
 			<!-- Nav tabs -->
 			<div class="tm-home-box-1">
@@ -193,7 +196,9 @@
 
 	<div class="section-margin-top">
 		<div class="row">
-			<div class="tm-section-header">
+			<div class="tm-section-header"<?if (!isset($_GET['type'])) {?> style="margin-top: 35px"<?} else {?>
+                style="margin-top: -50px"
+            <?}?>>
 				<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
 				<div class="col-lg-6 col-md-6 col-sm-6"><h2 class="tm-section-title">Products</h2></div>
 				<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
@@ -362,7 +367,7 @@
 <footer class="tm-black-bg">
 	<div class="container">
 		<div class="row">
-			<p class="tm-copyright-text">Copyright &copy; 2084 Your Company Name</p>
+            <p class="tm-copyright-text">Copyright &copy; 2024 Digital Enigma</p>
 		</div>
 	</div>
 </footer>
