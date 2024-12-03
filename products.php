@@ -78,187 +78,221 @@
 <!--</section>-->
 
 <!-- gray bg -->
-<section class="container tm-home-section-1" id="more" >
-    <?
-    $type = isset($_GET['type']) ? $_GET['type'] : '';
-    $hidden = ($type == '') ? 'hidden' : '';
+<section class="container tm-home-section-1" id="more" style="top: -20px">
+    <?php
+    $filterType = isset($_GET['type']) ? $_GET['type'] : '';
+//    $hidden = ($filterType == '') ? '' : 'hidden';
+    echo "<!-- Debug: Filter type is: " . htmlspecialchars($filterType) . " -->"; 
     ?>
-	<div class="row <?=$hidden?>">
+	<div class="row" style="margin-top: 45px">
 		<div class="col-lg-12 col-md-12 col-sm-12">
 			<!-- Nav tabs -->
 			<div class="tm-home-box-1">
-				<ul class="nav nav-tabs tm-white-bg" role="tablist" id="hotelCarTabs">
-					<li role="presentation" class="active">
-						<a href="#hotel" aria-controls="hotel" role="tab" data-toggle="tab">Hotel</a>
-					</li>
-					<li role="presentation">
-						<a href="#car" aria-controls="car" role="tab" data-toggle="tab">Car Rental</a>
-					</li>
-				</ul>
+				<div class="tm-white-bg">
+					<div class="tm-search-box effect2">
+						<form action="" method="get" class="search-form">
+							<div class="tm-form-inner">
+								<div class="form-group">
+									 <select class="form-control" name="type" id="typeFilter">
+										<option value="">Type</option>
+										<?php
+										$sql = "SELECT DISTINCT type FROM `products`";
+										$result = mysqli_query($conn, $sql);
+										$num_rows = mysqli_num_rows($result);
 
-				<!-- Tab panes -->
-				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="hotel">
-						<div class="tm-search-box effect2">
-							<form action="#" method="post" class="hotel-search-form">
-								<div class="tm-form-inner">
-									<div class="form-group">
-										 <select class="form-control">
-											<option value="">-- Select Hotel -- </option>
-											<option value="shangrila">Shangri-La</option>
-											<option value="chatrium">Chatrium</option>
-											<option value="fourseasons">Four Seasons</option>
-											<option value="hilton">Hilton</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<div class='input-group date' id='datetimepicker1'>
-											<input type='text' class="form-control" placeholder="Check-in Date" />
-											<span class="input-group-addon">
-												<span class="fa fa-calendar"></span>
-											</span>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class='input-group date' id='datetimepicker2'>
-											<input type='text' class="form-control" placeholder="Check-out Date" />
-											<span class="input-group-addon">
-												<span class="fa fa-calendar"></span>
-											</span>
-										</div>
-									</div>
-									<div class="form-group margin-bottom-0">
-										<select class="form-control">
-											<option value="">-- Guests -- </option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5p">5+</option>
-										</select>
-									</div>
+										while($row = mysqli_fetch_assoc($result)) {
+											$selected = ($filterType == $row['type']) ? 'selected' : '';
+											?>
+											<option value="<?=$row['type']?>" <?=$selected?>><?=ucwords($row['type'])?></option>
+											<?php
+										}
+										?>
+									</select>
 								</div>
-								<div class="form-group tm-yellow-gradient-bg text-center">
-									<button type="submit" name="submit" class="tm-yellow-btn">Check Now</button>
+								<div class="form-group">
+									<input type='text' name="search" class="form-control" placeholder="Search by name..." 
+										   value="<?=isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''?>"/>
 								</div>
-							</form>
-						</div>
-					</div>
-					<div role="tabpanel" class="tab-pane fade tm-white-bg" id="car">
-						<div class="tm-search-box effect2">
-							<form action="#" method="post" class="hotel-search-form">
-								<div class="tm-form-inner">
-									<div class="form-group">
-										 <select class="form-control">
-											<option value="">-- Select Model -- </option>
-											<option value="shangrila">BMW</option>
-											<option value="chatrium">Mercedes-Benz</option>
-											<option value="fourseasons">Toyota</option>
-											<option value="hilton">Honda</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<div class='input-group date-time' id='datetimepicker3'>
-											<input type='text' class="form-control" placeholder="Pickup Date" />
-											<span class="input-group-addon">
-												<span class="fa fa-calendar"></span>
-											</span>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class='input-group date-time' id='datetimepicker4'>
-											<input type='text' class="form-control" placeholder="Return Date" />
-											<span class="input-group-addon">
-												<span class="fa fa-calendar"></span>
-											</span>
-										</div>
-									</div>
-									<div class="form-group">
-										 <select class="form-control">
-											<option value="">-- Options -- </option>
-											<option value="">Child Seat</option>
-											<option value="">GPS Navigator</option>
-											<option value="">Insurance</option>
-										</select>
-									</div>
+								<div class="form-group margin-bottom-0">
+									<select class="form-control" name="price_range">
+										<option value="">-- Price Range -- </option>
+										<option value="0-1000" <?=isset($_GET['price_range']) && $_GET['price_range'] == '0-1000' ? 'selected' : ''?>>Rs. 0 - 1000</option>
+										<option value="1001-5000" <?=isset($_GET['price_range']) && $_GET['price_range'] == '1001-5000' ? 'selected' : ''?>>Rs. 1001 - 5000</option>
+										<option value="5001-10000" <?=isset($_GET['price_range']) && $_GET['price_range'] == '5001-10000' ? 'selected' : ''?>>Rs. 5001 - 10000</option>
+										<option value="10001+" <?=isset($_GET['price_range']) && $_GET['price_range'] == '10001+' ? 'selected' : ''?>>Rs. 10001+</option>
+									</select>
 								</div>
-								<div class="form-group tm-yellow-gradient-bg text-center">
-									<button type="submit" name="submit" class="tm-yellow-btn">Check Now</button>
-								</div>
-							</form>
-						</div>
+							</div>
+							<div class="form-group tm-yellow-gradient-bg text-center">
+								<button type="submit" name="submit" class="tm-yellow-btn">Search</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<div class="section-margin-top">
 		<div class="row">
-			<div class="tm-section-header"<?if (!isset($_GET['type'])) {?> style="margin-top: 35px"<?} else {?>
-                style="margin-top: -50px"
-            <?}?>>
+			<div class="tm-section-header"<?if (!isset($_GET['type'])) {?> style="margin-top: -25px"<?} ?>>
 				<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
 				<div class="col-lg-6 col-md-6 col-sm-6"><h2 class="tm-section-title">Products</h2></div>
 				<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
 			</div>
 		</div>
-        <?
-        $sql = "SELECT * FROM `products`";
-        $result = mysqli_query($conn, $sql);
+
+        <?php
+        $sql = "SELECT * FROM `products` WHERE 1=1";
+        $params = array();
+
+        // Add type filter
+        if (!empty($_GET['type'])) {
+            $sql .= " AND type = ?";
+            $params[] = $_GET['type'];
+        }
+
+        // Add search filter
+        if (!empty($_GET['search'])) {
+            $sql .= " AND name LIKE ?";
+            $params[] = "%".$_GET['search']."%";
+        }
+
+        // Add price range filter
+        if (!empty($_GET['price_range'])) {
+            $range = explode('-', $_GET['price_range']);
+            if (count($range) == 2) {
+                $sql .= " AND price BETWEEN ? AND ?";
+                $params[] = $range[0];
+                $params[] = $range[1];
+            } elseif (substr($_GET['price_range'], -1) == '+') {
+                $sql .= " AND price >= ?";
+                $params[] = intval($_GET['price_range']);
+            }
+        }
+
+        // Prepare and execute the statement
+        $stmt = mysqli_prepare($conn, $sql);
+        if (!empty($params)) {
+            $types = str_repeat('s', count($params));
+            mysqli_stmt_bind_param($stmt, $types, ...$params);
+        }
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         $num = mysqli_num_rows($result);
         ?>
 		<div class="row">
-			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
-				<div class="tm-home-box-2">
-					<img src="img/index-03.jpg" alt="image" class="img-responsive">
-					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>
-					<p class="tm-date">28 March 2016</p>
-					<div class="tm-home-box-2-container">
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
-				<div class="tm-home-box-2">
-					<img src="img/index-04.jpg" alt="image" class="img-responsive">
-					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>
-					<p class="tm-date">26 March 2016</p>
-					<div class="tm-home-box-2-container">
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
-				<div class="tm-home-box-2">
-					<img src="img/index-05.jpg" alt="image" class="img-responsive">
-					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>
-					<p class="tm-date">24 March 2016</p>
-					<div class="tm-home-box-2-container">
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
-				<div class="tm-home-box-2 tm-home-box-2-right">
-					<img src="img/index-06.jpg" alt="image" class="img-responsive">
-					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>
-					<p class="tm-date">22 March 2016</p>
-					<div class="tm-home-box-2-container">
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-					</div>
-				</div>
-			</div>
-            <?
+            <style>
+                .filterDiv {
+                    display: none;
+                }
+                .show {
+                    display: block !important;
+                }
+            </style>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    console.log('DOM loaded, applying filter: <?php echo isset($filterType) ? $filterType : "all"; ?>'); // Debug log
+                    filterSelection('<?php echo isset($filterType) ? $filterType : "all"; ?>');
+                });
+
+                function filterSelection(c) {
+                    console.log('Filtering for category:', c); // Debug log
+                    var x = document.getElementsByClassName("filterDiv");
+                    console.log('Found filterDiv elements:', x.length); // Debug log
+                    
+                    if (c == "" || c == "all") {
+                        for (var i = 0; i < x.length; i++) {
+                            w3AddClass(x[i], "show");
+                            console.log('Showing element:', i); // Debug log
+                        }
+                    } else {
+                        for (var i = 0; i < x.length; i++) {
+                            if (x[i].classList.contains(c)) {
+                                w3AddClass(x[i], "show");
+                                console.log('Showing element:', i, 'with class:', c); // Debug log
+                            } else {
+                                w3RemoveClass(x[i], "show");
+                                console.log('Hiding element:', i); // Debug log
+                            }
+                        }
+                    }
+                }
+
+                // Show filtered elements
+                function w3AddClass(element, name) {
+                    var i, arr1, arr2;
+                    arr1 = element.className.split(" ");
+                    arr2 = name.split(" ");
+                    for (i = 0; i < arr2.length; i++) {
+                        if (arr1.indexOf(arr2[i]) == -1) {
+                            element.className += " " + arr2[i];
+                        }
+                    }
+                }
+
+                // Hide elements that are not selected
+                function w3RemoveClass(element, name) {
+                    var i, arr1, arr2;
+                    arr1 = element.className.split(" ");
+                    arr2 = name.split(" ");
+                    for (i = 0; i < arr2.length; i++) {
+                        while (arr1.indexOf(arr2[i]) > -1) {
+                            arr1.splice(arr1.indexOf(arr2[i]), 1);
+                        }
+                    }
+                    element.className = arr1.join(" ");
+                }
+            </script>
+<!--			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">-->
+<!--				<div class="tm-home-box-2">-->
+<!--					<img src="img/index-03.jpg" alt="image" class="img-responsive">-->
+<!--					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>-->
+<!--					<p class="tm-date">28 March 2016</p>-->
+<!--					<div class="tm-home-box-2-container">-->
+<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
+<!--						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>-->
+<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">-->
+<!--				<div class="tm-home-box-2">-->
+<!--					<img src="img/index-04.jpg" alt="image" class="img-responsive">-->
+<!--					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>-->
+<!--					<p class="tm-date">26 March 2016</p>-->
+<!--					<div class="tm-home-box-2-container">-->
+<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
+<!--						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>-->
+<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">-->
+<!--				<div class="tm-home-box-2">-->
+<!--					<img src="img/index-05.jpg" alt="image" class="img-responsive">-->
+<!--					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>-->
+<!--					<p class="tm-date">24 March 2016</p>-->
+<!--					<div class="tm-home-box-2-container">-->
+<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
+<!--						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>-->
+<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">-->
+<!--				<div class="tm-home-box-2 tm-home-box-2-right">-->
+<!--					<img src="img/index-06.jpg" alt="image" class="img-responsive">-->
+<!--					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>-->
+<!--					<p class="tm-date">22 March 2016</p>-->
+<!--					<div class="tm-home-box-2-container">-->
+<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
+<!--						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>-->
+<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+            <?php
             if ($num > 0) {
                 for ($i = 0; $i < $num; $i++) {
                     $row = mysqli_fetch_assoc($result);
@@ -268,9 +302,10 @@
                     $manufacturer = $row['man'];
                     $type = $row['type'];
                     $img = $row['img'];
-
+                    // Add debug output for each product
+                    echo "<!-- Debug: Product " . $i . " type: " . htmlspecialchars($type) . " -->";
                     ?>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12 filterDiv <?= strtolower(htmlspecialchars($type)) ?>">
                 <div class="tm-home-box-2 tm-home-box-2-right">
                     <div class="product-image">
                         <img style="object-fit: cover; height: 100%; width: 100%" src="img/products/<?= $img?>" alt="image" class="img-responsive">
@@ -284,7 +319,7 @@
                     </div>
                 </div>
             </div>
-            <?
+            <?php
                 }
             }
             ?>
