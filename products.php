@@ -1,34 +1,48 @@
 <!DOCTYPE html>
+<?php
+include("includes/config.php");
+?>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Holiday - templatemo</title>
-
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">  
-  <link href="css/flexslider.css" rel="stylesheet">
-  <link href="css/templatemo-style.css" rel="stylesheet">
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simplikart</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="css/flexslider.css" rel="stylesheet">
+    <link href="css/templatemo-style.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script src="common.js"></script>
+    <script>
+        $(document).ready(function() {
+            getCart("<?=$gUserId?>");
+        });
+    </script>
 </head>
-<?php include("includes/config.php"); ?>
 <body class="tm-gray-bg">
 <!-- Header -->
+<style>
+    .badge:after{
+        content:attr(value);
+        font-size:12px;
+        color: #fff;
+        background: red;
+        border-radius:50%;
+        padding: 0 5px;
+        position:relative;
+        left:-8px;
+        top:-10px;
+        opacity:0.9;
+    }
+</style>
 <div class="tm-header">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-6 col-md-4 col-sm-3 tm-site-name-container">
-				<a href="#" class="tm-site-name">Simplikart</a>
+				<a href="index.php" class="tm-site-name">Simplikart</a>
 			</div>
 			<div class="col-lg-6 col-md-8 col-sm-9">
 				<div class="mobile-menu-icon">
@@ -36,49 +50,67 @@
 				</div>
 				<nav class="tm-nav">
 					<ul>
-						<li><a href="index.php">Home</a></li>
+                        <li><a href="index.php"><p>Home</p></a></li>
 						<li><a href="products.php" class="active">All Products</a></li>
 					</ul>
+
 				</nav>
-			</div>
+                <span id="panelCart"></span>
+            </div>
+<!--            <script>-->
+<!--                function showCart() {-->
+<!--                  if ($('#cart').attr("value") == '') {-->
+<!--                      alert('Cart is empty!');-->
+<!--                  } else {-->
+<!--                      window.location.replace('cart.php');-->
+<!--                  }-->
+<!--                }-->
+<!---->
+<!--                $(document).ready(function() {-->
+<!--                    console.log('Document ready fired');-->
+<!--                    -->
+<!--                    // Check if we can find the buy buttons-->
+<!--                    console.log('Found buyBtn elements:', $('.buyBtn').length);-->
+<!--                    -->
+<!--                    $('.buyBtn').click(function(e) {-->
+<!--                        console.log('Buy button clicked');-->
+<!--                        e.preventDefault();-->
+<!--                        -->
+<!--                        // Log the product ID we're trying to add-->
+<!--                        console.log('Adding product ID:', $(this).data('pid'));-->
+<!--                        -->
+<!--                        // Send an AJAX request to update the cart-->
+<!--                        $.ajax({-->
+<!--                            url: 'addItem.php',-->
+<!--                            type: 'POST',-->
+<!--                            data: { pid: $(this).data('pid') },-->
+<!--                            success: function(response) {-->
+<!--                                console.log('Server response:', response);-->
+<!--                                // Update the cart badge value-->
+<!--                                if (response > 0) {-->
+<!--                                    $('#cart').attr("value", response);-->
+<!--                                    // If the cart didn't have a value attribute before, add it-->
+<!--                                    if (!$('#cart').is('[value]')) {-->
+<!--                                        $('#cart').attr("value", response);-->
+<!--                                    }-->
+<!--                                }-->
+<!--                            },-->
+<!--                            error: function(xhr, status, error) {-->
+<!--                                console.error('Ajax error:', error);-->
+<!--                                console.error('Status:', status);-->
+<!--                                console.error('Response:', xhr.responseText);-->
+<!--                                alert('An error occurred: ' + error);-->
+<!--                            }-->
+<!--                        });-->
+<!--                    });-->
+<!--                });-->
+<!--            </script>-->
 		</div>
 	</div>
 </div>
 
-<!-- Banner -->
-<!--<section class="tm-banner">-->
-<!--	<div class="flexslider flexslider-banner">-->
-<!--	  <ul class="slides">-->
-<!--		<li>-->
-<!--			<div class="tm-banner-inner">-->
-<!--				<h1 class="tm-banner-title">Find <span class="tm-yellow-text">The Best</span> Place</h1>-->
-<!--				<p class="tm-banner-subtitle">For Your Holidays</p>-->
-<!--				<a href="#more" class="tm-banner-link">Learn More</a>-->
-<!--			</div>-->
-<!--			<img src="img/banner-1.jpg" alt="Image" />-->
-<!--		</li>-->
-<!--		<li>-->
-<!--			<div class="tm-banner-inner">-->
-<!--				<h1 class="tm-banner-title">Lorem <span class="tm-yellow-text">Ipsum</span> Dolor</h1>-->
-<!--				<p class="tm-banner-subtitle">Wonderful Destinations</p>-->
-<!--				<a href="#more" class="tm-banner-link">Learn More</a>-->
-<!--			</div>-->
-<!--		  <img src="img/banner-2.jpg" alt="Image" />-->
-<!--		</li>-->
-<!--		<li>-->
-<!--			<div class="tm-banner-inner">-->
-<!--				<h1 class="tm-banner-title">Proin <span class="tm-yellow-text">Gravida</span> Nibhvell</h1>-->
-<!--				<p class="tm-banner-subtitle">Velit Auctor</p>-->
-<!--				<a href="#more" class="tm-banner-link">Learn More</a>-->
-<!--			</div>-->
-<!--		  <img src="img/banner-3.jpg" alt="Image" />-->
-<!--		</li>-->
-<!--	  </ul>-->
-<!--	</div>-->
-<!--</section>-->
-
 <!-- gray bg -->
-<section class="container tm-home-section-1" id="more" style="top: -20px">
+<section class="container tm-home-section-1" id="more" style="top: 60px; margin-bottom: 60px;">
     <?php
     $filterType = isset($_GET['type']) ? $_GET['type'] : '';
 //    $hidden = ($filterType == '') ? '' : 'hidden';
@@ -91,8 +123,8 @@
 				<div class="tm-white-bg">
 					<div class="tm-search-box effect2">
 						<form action="" method="get" class="search-form">
-							<div class="tm-form-inner">
-								<div class="form-group">
+							<div class="tm-form-inner row">
+								<div class="col-sm-4">
 									 <select class="form-control" name="type" id="typeFilter">
 										<option value="">Type</option>
 										<?php
@@ -109,11 +141,11 @@
 										?>
 									</select>
 								</div>
-								<div class="form-group">
+								<div class="col-sm-4">
 									<input type='text' name="search" class="form-control" placeholder="Search by name..." 
 										   value="<?=isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''?>"/>
 								</div>
-								<div class="form-group margin-bottom-0">
+								<div class="col-sm-4 form-group">
 									<select class="form-control" name="price_range">
 										<option value="">-- Price Range -- </option>
 										<option value="0-1000" <?=isset($_GET['price_range']) && $_GET['price_range'] == '0-1000' ? 'selected' : ''?>>Rs. 0 - 1000</option>
@@ -203,16 +235,16 @@
                     
                     if (c == "" || c == "all") {
                         for (var i = 0; i < x.length; i++) {
-                            w3AddClass(x[i], "show");
+                            addClass(x[i], "show");
                             console.log('Showing element:', i); // Debug log
                         }
                     } else {
                         for (var i = 0; i < x.length; i++) {
                             if (x[i].classList.contains(c)) {
-                                w3AddClass(x[i], "show");
+                                addClass(x[i], "show");
                                 console.log('Showing element:', i, 'with class:', c); // Debug log
                             } else {
-                                w3RemoveClass(x[i], "show");
+                                removeClass(x[i], "show");
                                 console.log('Hiding element:', i); // Debug log
                             }
                         }
@@ -220,7 +252,7 @@
                 }
 
                 // Show filtered elements
-                function w3AddClass(element, name) {
+                function addClass(element, name) {
                     var i, arr1, arr2;
                     arr1 = element.className.split(" ");
                     arr2 = name.split(" ");
@@ -232,7 +264,7 @@
                 }
 
                 // Hide elements that are not selected
-                function w3RemoveClass(element, name) {
+                function removeClass(element, name) {
                     var i, arr1, arr2;
                     arr1 = element.className.split(" ");
                     arr2 = name.split(" ");
@@ -244,54 +276,7 @@
                     element.className = arr1.join(" ");
                 }
             </script>
-<!--			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">-->
-<!--				<div class="tm-home-box-2">-->
-<!--					<img src="img/index-03.jpg" alt="image" class="img-responsive">-->
-<!--					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>-->
-<!--					<p class="tm-date">28 March 2016</p>-->
-<!--					<div class="tm-home-box-2-container">-->
-<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
-<!--						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>-->
-<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">-->
-<!--				<div class="tm-home-box-2">-->
-<!--					<img src="img/index-04.jpg" alt="image" class="img-responsive">-->
-<!--					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>-->
-<!--					<p class="tm-date">26 March 2016</p>-->
-<!--					<div class="tm-home-box-2-container">-->
-<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
-<!--						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>-->
-<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">-->
-<!--				<div class="tm-home-box-2">-->
-<!--					<img src="img/index-05.jpg" alt="image" class="img-responsive">-->
-<!--					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>-->
-<!--					<p class="tm-date">24 March 2016</p>-->
-<!--					<div class="tm-home-box-2-container">-->
-<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
-<!--						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>-->
-<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">-->
-<!--				<div class="tm-home-box-2 tm-home-box-2-right">-->
-<!--					<img src="img/index-06.jpg" alt="image" class="img-responsive">-->
-<!--					<h3>Proin Gravida Nibhvel Lorem Quis Bind</h3>-->
-<!--					<p class="tm-date">22 March 2016</p>-->
-<!--					<div class="tm-home-box-2-container">-->
-<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
-<!--						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Travel</span></a>-->
-<!--						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
+
             <?php
             if ($num > 0) {
                 for ($i = 0; $i < $num; $i++) {
@@ -304,7 +289,7 @@
                     $img = $row['img'];
                     // Add debug output for each product
                     echo "<!-- Debug: Product " . $i . " type: " . htmlspecialchars($type) . " -->";
-                    ?>
+            ?>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12 filterDiv <?= strtolower(htmlspecialchars($type)) ?>">
                 <div class="tm-home-box-2 tm-home-box-2-right">
                     <div class="product-image">
@@ -313,92 +298,20 @@
                     <h3><?=$name?></h3>
                     <p class="tm-date"><?=$manufacturer?></p>
                     <div class="tm-home-box-2-container">
-                        <a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-                        <a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description">Rs. <?=$price?></span></a>
-                        <a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
+<!--                        <a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
+                        <a href="javascript:np()" class="tm-home-box-2-link" onclick="addToCart('<?=$_SESSION['tmpUserId']?>','<?=$id?>')" style="width: 100%"><span style="padding-top: 18px" class="tm-home-box-2-description">Rs. <?=$price?><br>Add to cart</span></a>
+<!--                        <a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
                     </div>
                 </div>
             </div>
             <?php
+                    }
                 }
-            }
             ?>
 		</div>
 	</div>
 </section>
 
-<!-- white bg -->
-<section class="tm-white-bg section-padding-bottom">
-	<div class="container">
-		<div class="row">
-			<div class="tm-section-header section-margin-top">
-				<div class="col-lg-4 col-md-3 col-sm-3"><hr></div>
-				<div class="col-lg-4 col-md-6 col-sm-6"><h2 class="tm-section-title">Popular Packages</h2></div>
-				<div class="col-lg-4 col-md-3 col-sm-3"><hr></div>
-			</div>
-			<div class="col-lg-6">
-				<div class="tm-home-box-3">
-					<div class="tm-home-box-3-img-container">
-						<img src="img/index-07.jpg" alt="image" class="img-responsive">
-					</div>
-					<div class="tm-home-box-3-info">
-						<p class="tm-home-box-3-description">Proin gravida nibhvell velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum</p>
-						<div class="tm-home-box-2-container">
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Travel</span></a>
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-					</div>
-					</div>
-				</div>
-			 </div>
-			 <div class="col-lg-6">
-				<div class="tm-home-box-3">
-					<div class="tm-home-box-3-img-container">
-						<img src="img/index-08.jpg" alt="image" class="img-responsive">
-					</div>
-					<div class="tm-home-box-3-info">
-						<p class="tm-home-box-3-description">Proin gravida nibhvell velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum</p>
-						<div class="tm-home-box-2-container">
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Travel</span></a>
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-					</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="tm-home-box-3">
-					<div class="tm-home-box-3-img-container">
-						<img src="img/index-09.jpg" alt="image" class="img-responsive">
-					</div>
-					<div class="tm-home-box-3-info">
-						<p class="tm-home-box-3-description">Proin gravida nibhvell velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum</p>
-						<div class="tm-home-box-2-container">
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Travel</span></a>
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-					</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="tm-home-box-3">
-					<div class="tm-home-box-3-img-container">
-						<img src="img/index-10.jpg" alt="image" class="img-responsive">
-					</div>
-					<div class="tm-home-box-3-info">
-						<p class="tm-home-box-3-description">Proin gravida nibhvell velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum</p>
-						<div class="tm-home-box-2-container">
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-						<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Travel</span></a>
-						<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-					</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
 <footer class="tm-black-bg">
 	<div class="container">
 		<div class="row">

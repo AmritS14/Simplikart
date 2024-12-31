@@ -27,8 +27,10 @@ body { overflow-x: hidden; }
 .tm-header {
 	background: #000000;
 	height: 80px;
-	position: relative;
+	position: fixed;
+	top: 0;
 	z-index: 100;
+	width: 100%;
 }
 .tm-site-name-container { padding-top: 20px; }
 .tm-site-name {
@@ -53,7 +55,7 @@ body { overflow-x: hidden; }
 .tm-nav li a {
 	color: #838383;
 	display: block;
-	padding: 45px 34px 15px 34px;
+	padding: 35px 34px 25px 34px;
 	text-transform: uppercase;
 	transition: all 0.3s ease;
 }
@@ -477,7 +479,7 @@ hr { border-top: 1px solid #111010; }
 }
 .tm-about-box-1-img {
 	display: block;
-	margin: 0 auto 30px;
+	/*margin: 0 auto 30px;*/
 	border-radius: 50%;
 	border: 5px solid #d4d4d4;
 	transition: all 0.3s ease;
@@ -545,15 +547,15 @@ hr { border-top: 1px solid #111010; }
 .tm-about-box-2-title {
 	text-transform: uppercase;
 	text-align: left;
-	margin-bottom: 30px;
+	margin-bottom: 6px;
 }
 .tm-about-box-2-description {
 	text-align: left;
-	margin-bottom: 20px;
+	margin-bottom: 8px;
 }
 .tm-about-box-2-footer {
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+	/*border-top: 1px solid #ddd;*/
+	/*border-bottom: 1px solid #ddd;*/
 	text-align: right;
 	text-transform: uppercase;
 	padding-top: 10px;
@@ -726,7 +728,7 @@ hr { border-top: 1px solid #111010; }
 	.tm-home-box-1 {
 		margin-bottom: 50px;
 		width: 100%;
-		height: 436px;
+		/*height: 436px;*/
 	}
 	.tm-home-box-2 { margin: 0 auto 30px; }
 	.tm-home-box-2-description {
@@ -933,4 +935,10 @@ hr { border-top: 1px solid #111010; }
     background: #ff9f43; /* Old browsers */ /* FF3.6+ */ /* Chrome,Safari4+ */ /* Chrome10+,Safari5.1+ */ /* Opera 11.10+ */ /* IE10+ */
     background: linear-gradient(to bottom, #ff9f43 0%,#ff953c 1%,#ff8b35 2%,#ff812e 4%,#ff7727 5%,#ff6d20 6%,#ff6319 7%,#ff5912 15%,#ff4f0b 16%,#ff4504 73%,#ff3b00 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9f43', endColorstr='#ff3b00',GradientType=0); /* IE6-9 */
+}
+
+.main-footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }

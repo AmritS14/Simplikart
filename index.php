@@ -1,55 +1,66 @@
 <!DOCTYPE html>
+<?php
+include("includes/config.php");
+?>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Simplikart</title>
-<!--
-Holiday Template
-http://www.templatemo.com/tm-475-holiday
--->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet"> 
   <link href="css/flexslider.css" rel="stylesheet"> 
   <link href="css/templatemo-style.css" rel="stylesheet">
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script src="common.js"></script>
+    <script>
+        $(document).ready(function() {
+            getCart("<?=$gUserId?>");
+        });
+    </script>
   </head>
-<? include("includes/config.php");?>
   <body class="tm-gray-bg">
-  	<!-- Header -->
-  	<div class="tm-header">
-  		<div class="container">
-  			<div class="row">
-  				<div class="col-lg-6 col-md-4 col-sm-3 tm-site-name-container">
-  					<a href="#" class="tm-site-name">Simplikart</a>
-  				</div>
-	  			<div class="col-lg-6 col-md-8 col-sm-9">
-	  				<div class="mobile-menu-icon">
-		              <i class="fa fa-bars"></i>
-		            </div>
-	  				<nav class="tm-nav">
-						<ul>
-                            <li><a href="index.php" class="active">Home</a></li>
-                            <li><a href="products.php">All Products</a></li>
-						</ul>
-					</nav>		
-	  			</div>				
-  			</div>
-  		</div>	  	
-  	</div>
+  <style>
+      .badge:after{
+          content:attr(value);
+          font-size:12px;
+          color: #fff;
+          background: red;
+          border-radius:50%;
+          padding: 0 5px;
+          position:relative;
+          left:-8px;
+          top:-10px;
+          opacity:0.9;
+      }
+  </style>
+  <div class="tm-header">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 col-md-4 col-sm-3 tm-site-name-container">
+                  <a href="index.php" class="tm-site-name">Simplikart</a>
+              </div>
+              <div class="col-lg-6 col-md-8 col-sm-9">
+                  <div class="mobile-menu-icon">
+                      <i class="fa fa-bars"></i>
+                  </div>
+                  <nav class="tm-nav">
+                      <ul>
+                          <li><a href="index.php" class="active">Home</a></li>
+                          <li><a href="products.php">All Products</a></li>
+                      </ul>
+                  </nav>
+                  <span id="panelCart"></span>
+              </div>
+          </div>
+      </div>
+  </div>
 	
 	<!-- Banner -->
-	<section class="tm-banner">
+	<section class="tm-banner" style="margin-top: 80px">
 		<!-- Flexslider -->
 		<div class="flexslider flexslider-banner">
 		  <ul class="slides">
@@ -97,20 +108,18 @@ http://www.templatemo.com/tm-475-holiday
 		</div>			
 	</section>
 
-    <style>
-        @media (min-width: 992px) {
-            .container {
-                width: 970px;
-            }
-    </style>
+<!--    <style>-->
+<!--        @media (min-width: 992px) {-->
+<!--            .container {-->
+<!--                width: 970px;-->
+<!--            }-->
+<!--    </style>-->
 
 	<!-- gray bg -->	
 	<section class="container tm-home-section-1" id="more">
 		<div class="row">
 
             <?
-
-
             $sql = "SELECT DISTINCT type FROM `products`";
             $result = mysqli_query($conn, $sql);
             $num = mysqli_num_rows($result);
@@ -251,72 +260,7 @@ http://www.templatemo.com/tm-475-holiday
 <!--			</div>		-->
 <!--		</div>-->
 	</section>		
-	
-	<!-- white bg -->
-	<section class="tm-white-bg section-padding-bottom">
-		<div class="container">
-			<div class="row">
-				<div class="tm-section-header section-margin-top">
-					<div class="col-lg-4 col-md-3 col-sm-3"><hr></div>
-					<div class="col-lg-4 col-md-6 col-sm-6"><h2 class="tm-section-title">Special Packages</h2></div>
-					<div class="col-lg-4 col-md-3 col-sm-3"><hr></div>	
-				</div>				
-			</div>
-			<div class="row">
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
-					<div class="tm-tours-box-2">						
-						<img src="img/index-03.jpg" alt="image" class="img-responsive">
-						<div class="tm-tours-box-2-info">
-							<h3 class="margin-bottom-15">Proin Gravida Nibhvel Lorem Quis Bind</h3>
-							<img src="img/rating.png" alt="image" class="margin-bottom-5">
-							<p>28 March 2084</p>	
-						</div>						
-						<a href="#" class="tm-tours-box-2-link">Book Now</a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
-					<div class="tm-tours-box-2">						
-						<img src="img/index-04.jpg" alt="image" class="img-responsive">
-						<div class="tm-tours-box-2-info">
-							<h3 class="margin-bottom-15">Proin Gravida Nibhvel Lorem Quis Bind</h3>
-							<img src="img/rating.png" alt="image" class="margin-bottom-5">
-							<p>26 March 2084</p>	
-						</div>						
-						<a href="#" class="tm-tours-box-2-link">Book Now</a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
-					<div class="tm-tours-box-2">						
-						<img src="img/index-05.jpg" alt="image" class="img-responsive">
-						<div class="tm-tours-box-2-info">
-							<h3 class="margin-bottom-15">Proin Gravida Nibhvel Lorem Quis Bind</h3>
-							<img src="img/rating.png" alt="image" class="margin-bottom-5">
-							<p>24 March 2084</p>	
-						</div>						
-						<a href="#" class="tm-tours-box-2-link">Book Now</a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
-					<div class="tm-tours-box-2">						
-						<img src="img/index-06.jpg" alt="image" class="img-responsive">
-						<div class="tm-tours-box-2-info">
-							<h3 class="margin-bottom-15">Proin Gravida Nibhvel Lorem Quis Bind</h3>
-							<img src="img/rating.png" alt="image" class="margin-bottom-5">
-							<p>22 March 2084</p>	
-						</div>						
-						<a href="#" class="tm-tours-box-2-link">Book Now</a>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<p class="home-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.
-					Morbi accumsaipsu m velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat.
-					</p>					
-				</div>
-			</div>	
-		</div>
-	</section>
+
 	<footer class="tm-black-bg">
 		<div class="container">
 			<div class="row">
