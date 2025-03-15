@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
 include("includes/config.php");
+$pass = isset($_SESSION['passLogin']) ? $_SESSION['passLogin'] : '';
+if ($pass == 'true')
+{
 ?>
 <html lang="en">
 <head>
@@ -18,32 +21,18 @@ include("includes/config.php");
     <script src="common.js"></script>
     <script>
         $(document).ready(function() {
-            getCart("<?=$gUserId?>");
+            getCart("<?=$_SESSION['userId']?>");
         });
     </script>
   </head>
   <body class="tm-gray-bg">
-  <style>
-      .badge:after{
-          content:attr(value);
-          font-size:12px;
-          color: #fff;
-          background: red;
-          border-radius:50%;
-          padding: 0 5px;
-          position:relative;
-          left:-8px;
-          top:-10px;
-          opacity:0.9;
-      }
-  </style>
   <div class="tm-header">
       <div class="container">
           <div class="row">
-              <div class="col-lg-6 col-md-4 col-sm-3 tm-site-name-container">
+              <div class="col-md-4 col-sm-3 tm-site-name-container">
                   <a href="index.php" class="tm-site-name">Simplikart</a>
               </div>
-              <div class="col-lg-6 col-md-8 col-sm-9">
+              <div class="col-md-8 col-sm-9">
                   <div class="mobile-menu-icon">
                       <i class="fa fa-bars"></i>
                   </div>
@@ -51,75 +40,67 @@ include("includes/config.php");
                       <ul>
                           <li><a href="index.php" class="active">Home</a></li>
                           <li><a href="products.php">All Products</a></li>
+                          <li class="dropdown">
+                              <a href="#" class="dropdown-toggle">
+                                  Welcome, <?= $_SESSION['user'] ?> <b class="caret"></b>
+                              </a>
+                              <ul class="dropdown-menu" style="height: auto;">
+                                  <li><a href="orders.php">Orders</a></li>
+                                  <li><a href="logout.php" class="tm-logout" style="color: darkred;">Logout</a></li>
+                              </ul>
+                          </li>
+                          <li style="margin-top: -8px"><span id="panelCart"></span></li>
                       </ul>
                   </nav>
-                  <span id="panelCart"></span>
               </div>
           </div>
       </div>
   </div>
+
+  <script>
+      // Add delay for dropdown hover
+      let dropdown = document.querySelector('.dropdown');
+      let timer;
+
+      // Show dropdown on hover
+      dropdown.addEventListener('mouseover', function () {
+          clearTimeout(timer);
+          dropdown.querySelector('.dropdown-menu').style.display = 'block';
+      });
+
+      // Hide dropdown on mouse leave after a short delay
+      dropdown.addEventListener('mouseleave', function () {
+          timer = setTimeout(function () {
+              dropdown.querySelector('.dropdown-menu').style.display = 'none';
+          }, 300); // Adjust the delay (in milliseconds) as needed
+      });
+
+  </script>
 	
 	<!-- Banner -->
 	<section class="tm-banner" style="margin-top: 80px">
 		<!-- Flexslider -->
 		<div class="flexslider flexslider-banner">
 		  <ul class="slides">
-<!--		    <li>-->
-<!--			    <div class="tm-banner-inner">-->
-<!--					<h1 class="tm-banner-title">Find <span class="tm-yellow-text">Tour</span> Programs</h1>-->
-<!--					<p class="tm-banner-subtitle">For Your Destinations</p>-->
-<!--					<a href="#more" class="tm-banner-link">Learn More</a>	-->
-<!--				</div>-->
-<!--		      <img src="img/banner-2.jpg" />-->
-<!--		    </li>-->
             <li>
                 <div class="tm-banner-inner">
-<!--                    <h1 class="tm-banner-title">Find <span class="tm-yellow-text">Tour</span> Programs</h1>-->
-<!--                    <p class="tm-banner-subtitle">For Your Destinations</p>-->
                     <a href="products.php?type=sports&search=football" class="tm-banner-link">Shop now</a>
                 </div>
                 <img src="img/banners/rugby.jpg" />
             </li>
               <li>
                   <div class="tm-banner-inner">
-                      <!--                    <h1 class="tm-banner-title">Find <span class="tm-yellow-text">Tour</span> Programs</h1>-->
-                      <!--                    <p class="tm-banner-subtitle">For Your Destinations</p>-->
                       <a href="products.php" class="tm-banner-link" style="margin-bottom: -172px; margin-left: 62px;">Shop now</a>
                   </div>
                   <img src="img/banners/sale.jpg"/>
               </li>
-<!--		    <li>-->
-<!--			    <div class="tm-banner-inner">-->
-<!--					<h1 class="tm-banner-title">Lorem <span class="tm-yellow-text">Ipsum</span> Dolor</h1>-->
-<!--					<p class="tm-banner-subtitle">Wonderful Destinations</p>-->
-<!--					<a href="#more" class="tm-banner-link">Learn More</a>	-->
-<!--				</div>-->
-<!--		      <img src="img/banner-3.jpg" />-->
-<!--		    </li>-->
-<!--		    <li>-->
-<!--			    <div class="tm-banner-inner">-->
-<!--					<h1 class="tm-banner-title">Proin <span class="tm-yellow-text">Gravida</span> Nibhvell</h1>-->
-<!--					<p class="tm-banner-subtitle">Velit Auctor</p>-->
-<!--					<a href="" class="tm-banner-link">Learn More</a>-->
-<!--				</div>-->
-<!--		      <img src="img/banner-1.jpg" />-->
-<!--		    </li>-->
 		  </ul>
 		</div>			
 	</section>
-
-<!--    <style>-->
-<!--        @media (min-width: 992px) {-->
-<!--            .container {-->
-<!--                width: 970px;-->
-<!--            }-->
-<!--    </style>-->
-
-	<!-- gray bg -->	
 	<section class="container tm-home-section-1" id="more">
 		<div class="row">
 
-            <?
+            <?php
             $sql = "SELECT DISTINCT type FROM `products`";
             $result = mysqli_query($conn, $sql);
             $num = mysqli_num_rows($result);
@@ -154,114 +135,13 @@ include("includes/config.php");
                     </a>
                 </div>
             </div>
-            <?
+            <?php
             }
             ?>
 		</div>
-
-	
-<!--		<div class="section-margin-top">-->
-<!--			<div class="row">				-->
-<!--				<div class="tm-section-header">-->
-<!--					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>-->
-<!--					<div class="col-lg-6 col-md-6 col-sm-6"><h2 class="tm-section-title">Our Tours</h2></div>-->
-<!--					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>	-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="row">-->
-<!--				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
-<!--					<div class="tm-tours-box-1">-->
-<!--						<img src="img/tours-03.jpg" alt="image" class="img-responsive">-->
-<!--						<div class="tm-tours-box-1-info">-->
-<!--							<div class="tm-tours-box-1-info-left">-->
-<!--								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	-->
-<!--								<p class="gray-text">28 March 2084</p>-->
-<!--							</div>-->
-<!--							<div class="tm-tours-box-1-info-right">-->
-<!--								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	-->
-<!--							</div>							-->
-<!--						</div>-->
-<!--						<div class="tm-tours-box-1-link">-->
-<!--							<div class="tm-tours-box-1-link-left">-->
-<!--								Duration: 8 days-->
-<!--							</div>-->
-<!--							<a href="#" class="tm-tours-box-1-link-right">-->
-<!--								$2,200								-->
-<!--							</a>							-->
-<!--						</div>-->
-<!--					</div>					-->
-<!--				</div>-->
-<!--				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
-<!--					<div class="tm-tours-box-1">-->
-<!--						<img src="img/tours-04.jpg" alt="image" class="img-responsive">-->
-<!--						<div class="tm-tours-box-1-info">-->
-<!--							<div class="tm-tours-box-1-info-left">-->
-<!--								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	-->
-<!--								<p class="gray-text">26 March 2084</p>-->
-<!--							</div>-->
-<!--							<div class="tm-tours-box-1-info-right">-->
-<!--								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	-->
-<!--							</div>							-->
-<!--						</div>-->
-<!--						<div class="tm-tours-box-1-link">-->
-<!--							<div class="tm-tours-box-1-link-left">-->
-<!--								Duration: 9 days-->
-<!--							</div>-->
-<!--							<a href="#" class="tm-tours-box-1-link-right">-->
-<!--								$1,800								-->
-<!--							</a>							-->
-<!--						</div>-->
-<!--					</div>					-->
-<!--				</div>-->
-<!--				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
-<!--					<div class="tm-tours-box-1">-->
-<!--						<img src="img/tours-05.jpg" alt="image" class="img-responsive">-->
-<!--						<div class="tm-tours-box-1-info">-->
-<!--							<div class="tm-tours-box-1-info-left">-->
-<!--								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	-->
-<!--								<p class="gray-text">24 March 2084</p>-->
-<!--							</div>-->
-<!--							<div class="tm-tours-box-1-info-right">-->
-<!--								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	-->
-<!--							</div>							-->
-<!--						</div>-->
-<!--						<div class="tm-tours-box-1-link">-->
-<!--							<div class="tm-tours-box-1-link-left">-->
-<!--								Duration: 8 days-->
-<!--							</div>-->
-<!--							<a href="#" class="tm-tours-box-1-link-right">-->
-<!--								$1,600								-->
-<!--							</a>							-->
-<!--						</div>-->
-<!--					</div>					-->
-<!--				</div>-->
-<!--				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
-<!--					<div class="tm-tours-box-1">-->
-<!--						<img src="img/tours-06.jpg" alt="image" class="img-responsive">-->
-<!--						<div class="tm-tours-box-1-info">-->
-<!--							<div class="tm-tours-box-1-info-left">-->
-<!--								<p class="text-uppercase margin-bottom-20">Proin Gravida Nibhvel Lorem Quis Bind</p>	-->
-<!--								<p class="gray-text">22 March 2084</p>-->
-<!--							</div>-->
-<!--							<div class="tm-tours-box-1-info-right">-->
-<!--								<p class="gray-text tours-1-description">Lorem quis bibendum auctor, nisi elit consequat ipsum, sec sagittis sem nibh id elit.</p>	-->
-<!--							</div>							-->
-<!--						</div>-->
-<!--						<div class="tm-tours-box-1-link">-->
-<!--							<div class="tm-tours-box-1-link-left">-->
-<!--								Duration: 5 days-->
-<!--							</div>-->
-<!--							<a href="#" class="tm-tours-box-1-link-right">-->
-<!--								$1,200								-->
-<!--							</a>							-->
-<!--						</div>-->
-<!--					</div>					-->
-<!--				</div>-->
-<!--			</div>		-->
-<!--		</div>-->
 	</section>		
 
-	<footer class="tm-black-bg">
+	<footer class="tm-black-bg main-footer">
 		<div class="container">
 			<div class="row">
 				<p class="tm-copyright-text">Copyright &copy; 2024 Digital Enigma</p>
@@ -312,3 +192,10 @@ include("includes/config.php");
 	</script>
  </body>
  </html>
+<?php
+}
+else
+{
+    header("Location: login.php");
+}
+?>

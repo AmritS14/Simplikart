@@ -18,103 +18,48 @@ include("includes/config.php");
     <script src="common.js"></script>
     <script>
         $(document).ready(function() {
-            getCart("<?=$gUserId?>");
+            getCart("<?=$_SESSION['userId']?>");
         });
     </script>
 </head>
 <body class="tm-gray-bg">
 <!-- Header -->
-<style>
-    .badge:after{
-        content:attr(value);
-        font-size:12px;
-        color: #fff;
-        background: red;
-        border-radius:50%;
-        padding: 0 5px;
-        position:relative;
-        left:-8px;
-        top:-10px;
-        opacity:0.9;
-    }
-</style>
 <div class="tm-header">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-6 col-md-4 col-sm-3 tm-site-name-container">
+			<div class="col-md-4 col-sm-3 tm-site-name-container">
 				<a href="index.php" class="tm-site-name">Simplikart</a>
 			</div>
-			<div class="col-lg-6 col-md-8 col-sm-9">
-				<div class="mobile-menu-icon">
-				  <i class="fa fa-bars"></i>
-				</div>
-				<nav class="tm-nav">
-					<ul>
-                        <li><a href="index.php"><p>Home</p></a></li>
-						<li><a href="products.php" class="active">All Products</a></li>
-					</ul>
-
-				</nav>
-                <span id="panelCart"></span>
+            <div class="col-md-8 col-sm-9">
+                <div class="mobile-menu-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <nav class="tm-nav">
+                    <ul>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="products.php" class="active">All Products</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle">
+                                Welcome, <?= $_SESSION['user'] ?> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu" style="height: auto;">
+                                <li><a href="orders.php">Orders</a></li>
+                                <li><a href="logout.php" class="tm-logout" style="color: darkred;">Logout</a></li>
+                            </ul>
+                        </li>
+                        <li style="margin-top: -8px"><span id="panelCart"></span></li>
+                    </ul>
+                </nav>
             </div>
-<!--            <script>-->
-<!--                function showCart() {-->
-<!--                  if ($('#cart').attr("value") == '') {-->
-<!--                      alert('Cart is empty!');-->
-<!--                  } else {-->
-<!--                      window.location.replace('cart.php');-->
-<!--                  }-->
-<!--                }-->
-<!---->
-<!--                $(document).ready(function() {-->
-<!--                    console.log('Document ready fired');-->
-<!--                    -->
-<!--                    // Check if we can find the buy buttons-->
-<!--                    console.log('Found buyBtn elements:', $('.buyBtn').length);-->
-<!--                    -->
-<!--                    $('.buyBtn').click(function(e) {-->
-<!--                        console.log('Buy button clicked');-->
-<!--                        e.preventDefault();-->
-<!--                        -->
-<!--                        // Log the product ID we're trying to add-->
-<!--                        console.log('Adding product ID:', $(this).data('pid'));-->
-<!--                        -->
-<!--                        // Send an AJAX request to update the cart-->
-<!--                        $.ajax({-->
-<!--                            url: 'addItem.php',-->
-<!--                            type: 'POST',-->
-<!--                            data: { pid: $(this).data('pid') },-->
-<!--                            success: function(response) {-->
-<!--                                console.log('Server response:', response);-->
-<!--                                // Update the cart badge value-->
-<!--                                if (response > 0) {-->
-<!--                                    $('#cart').attr("value", response);-->
-<!--                                    // If the cart didn't have a value attribute before, add it-->
-<!--                                    if (!$('#cart').is('[value]')) {-->
-<!--                                        $('#cart').attr("value", response);-->
-<!--                                    }-->
-<!--                                }-->
-<!--                            },-->
-<!--                            error: function(xhr, status, error) {-->
-<!--                                console.error('Ajax error:', error);-->
-<!--                                console.error('Status:', status);-->
-<!--                                console.error('Response:', xhr.responseText);-->
-<!--                                alert('An error occurred: ' + error);-->
-<!--                            }-->
-<!--                        });-->
-<!--                    });-->
-<!--                });-->
-<!--            </script>-->
 		</div>
 	</div>
 </div>
 
 <!-- gray bg -->
-<section class="container tm-home-section-1" id="more" style="top: 60px; margin-bottom: 60px;">
+<section class="container tm-home-section-1" id="more" style="top: 60px; margin-bottom: 115px;">
     <?php
     $filterType = isset($_GET['type']) ? $_GET['type'] : '';
-//    $hidden = ($filterType == '') ? '' : 'hidden';
-    echo "<!-- Debug: Filter type is: " . htmlspecialchars($filterType) . " -->"; 
+    echo "<!-- Debug: Filter type is: " . htmlspecialchars($filterType) . " -->";
     ?>
 	<div class="row" style="margin-top: 45px">
 		<div class="col-lg-12 col-md-12 col-sm-12">
@@ -167,7 +112,7 @@ include("includes/config.php");
 
 	<div class="section-margin-top">
 		<div class="row">
-			<div class="tm-section-header"<?if (!isset($_GET['type'])) {?> style="margin-top: -25px"<?} ?>>
+			<div class="tm-section-header">
 				<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
 				<div class="col-lg-6 col-md-6 col-sm-6"><h2 class="tm-section-title">Products</h2></div>
 				<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
@@ -224,28 +169,22 @@ include("includes/config.php");
             </style>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    console.log('DOM loaded, applying filter: <?php echo isset($filterType) ? $filterType : "all"; ?>'); // Debug log
                     filterSelection('<?php echo isset($filterType) ? $filterType : "all"; ?>');
                 });
 
                 function filterSelection(c) {
-                    console.log('Filtering for category:', c); // Debug log
                     var x = document.getElementsByClassName("filterDiv");
-                    console.log('Found filterDiv elements:', x.length); // Debug log
                     
                     if (c == "" || c == "all") {
                         for (var i = 0; i < x.length; i++) {
                             addClass(x[i], "show");
-                            console.log('Showing element:', i); // Debug log
                         }
                     } else {
                         for (var i = 0; i < x.length; i++) {
                             if (x[i].classList.contains(c)) {
                                 addClass(x[i], "show");
-                                console.log('Showing element:', i, 'with class:', c); // Debug log
                             } else {
                                 removeClass(x[i], "show");
-                                console.log('Hiding element:', i); // Debug log
                             }
                         }
                     }
@@ -287,8 +226,6 @@ include("includes/config.php");
                     $manufacturer = $row['man'];
                     $type = $row['type'];
                     $img = $row['img'];
-                    // Add debug output for each product
-                    echo "<!-- Debug: Product " . $i . " type: " . htmlspecialchars($type) . " -->";
             ?>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12 filterDiv <?= strtolower(htmlspecialchars($type)) ?>">
                 <div class="tm-home-box-2 tm-home-box-2-right">
@@ -298,9 +235,7 @@ include("includes/config.php");
                     <h3><?=$name?></h3>
                     <p class="tm-date"><?=$manufacturer?></p>
                     <div class="tm-home-box-2-container">
-<!--                        <a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>-->
-                        <a href="javascript:np()" class="tm-home-box-2-link" onclick="addToCart('<?=$_SESSION['tmpUserId']?>','<?=$id?>')" style="width: 100%"><span style="padding-top: 18px" class="tm-home-box-2-description">Rs. <?=$price?><br>Add to cart</span></a>
-<!--                        <a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>-->
+                        <a href="javascript:np()" class="tm-home-box-2-link" onclick="addToCart('<?=$_SESSION['userId']?>','<?=$id?>')" style="width: 100%"><span style="padding-top: 18px" class="tm-home-box-2-description">Rs. <?=$price?><br>Add to cart</span></a>
                     </div>
                 </div>
             </div>
@@ -312,7 +247,7 @@ include("includes/config.php");
 	</div>
 </section>
 
-<footer class="tm-black-bg">
+<footer class="tm-black-bg main-footer">
 	<div class="container">
 		<div class="row">
             <p class="tm-copyright-text">Copyright &copy; 2024 Digital Enigma</p>
@@ -328,7 +263,7 @@ include("includes/config.php");
 <script src="js/froogaloop.js"></script>
 <script src="js/jquery.fitvid.js"></script>
 -->
-<script type="text/javascript" src="js/templatemo-script.js"></script>      		<!-- Templatemo Script -->
+<script type="text/javascript" src="js/templatemo-script.js"></script>
 <script>
 	// HTML document is loaded. DOM is ready.
 	$(function() {
@@ -360,54 +295,8 @@ include("includes/config.php");
 
 	// Load Flexslider when everything is loaded.
 	$(window).load(function() {
-		// Vimeo API nonsense
 
-/*
-		  var player = document.getElementById('player_1');
-		  $f(player).addEvent('ready', ready);
-
-		  function addEvent(element, eventName, callback) {
-			if (element.addEventListener) {
-			  element.addEventListener(eventName, callback, false)
-			} else {
-			  element.attachEvent(eventName, callback, false);
-			}
-		  }
-
-		  function ready(player_id) {
-			var froogaloop = $f(player_id);
-			froogaloop.addEvent('play', function(data) {
-			  $('.flexslider').flexslider("pause");
-			});
-			froogaloop.addEvent('pause', function(data) {
-			  $('.flexslider').flexslider("play");
-			});
-		  }
-*/
-
-
-
-		  // Call fitVid before FlexSlider initializes, so the proper initial height can be retrieved.
-/*
-
-		  $(".flexslider")
-			.fitVids()
-			.flexslider({
-			  animation: "slide",
-			  useCSS: false,
-			  animationLoop: false,
-			  smoothHeight: true,
-			  controlNav: false,
-			  before: function(slider){
-				$f(player).api('pause');
-			  }
-		  });
-*/
-
-
-
-
-//	For images only
+    //	For images only
 		$('.flexslider').flexslider({
 			controlNav: false
 		});

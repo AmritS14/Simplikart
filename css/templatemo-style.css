@@ -926,7 +926,7 @@ hr { border-top: 1px solid #111010; }
 .tm-purple-gradient-bg {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9b59b6+0,934fb0+1,8b45aa+2,833ba4+4,7b319e+5,732798+6,6b1d92+7,631388+15,5b0982+16,53007c+73,4b0076+100 */
     background: #9b59b6; /* Old browsers */ /* FF3.6+ */ /* Chrome,Safari4+ */ /* Chrome10+,Safari5.1+ */ /* Opera 11.10+ */ /* IE10+ */
-    background: linear-gradient(to bottom, #9b59b6 0%,#934fb0 1%,#8b45aa 2%,#833ba4 4%,#7b319e 5%,#732798 6%,#6b1d92 7%,#631388 15%,#5b0982 16%,#53007c 73%,#4b0076 100%); /* W3C */
+    background: linear-gradient(to bottom, #9b59b6 0%,#934fb0 1%,#8b45aa 2%,#833ba4 4%,#7b319e 5%,#732798 6%,#6b1d92 7%,#631388+15,5b0982+16,53007c+73,4b0076+100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9b59b6', endColorstr='#4b0076',GradientType=0); /* IE6-9 */
 }
 
@@ -938,7 +938,98 @@ hr { border-top: 1px solid #111010; }
 }
 
 .main-footer {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	width: 100%;
+	background-color: #000;
+	height: 60px;
+}
+
+/* Add margin to the main content to prevent footer overlap */
+.tm-white-bg.section-padding-bottom {
+	margin-bottom: 60px;  /* Adjust based on footer height */
+}
+
+.badge:after{
+	content:attr(value);
+	font-size:12px;
+	color: #fff;
+	background: red;
+	border-radius:50%;
+	padding: 0 5px;
+	position:relative;
+	left:-8px;
+	top:-10px;
+	opacity:0.9;
+}
+
+.tm-checkout-btn:hover {
+	background-color: #f3d320 !important;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+}
+
+.tm-checkout-btn:focus {
+	outline: none !important;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Dropdown container */
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1000;
+	display: none; /* Initially hidden */
+	min-width: 200px;
+	border-radius: 4px;
+	padding: 0;
+	list-style: none;
+	transition: visibility 0.3s, opacity 0.3s ease; /* Smooth fade effect */
+	opacity: 0; /* Start hidden */
+	visibility: hidden; /* Prevent interaction when hidden */
+}
+
+/* Show dropdown on hover with stability */
+.dropdown:hover .dropdown-menu {
+	display: block;
+	opacity: 1; /* Make visible */
+	visibility: visible; /* Allow interaction */
+}
+
+/* Dropdown links */
+.dropdown-menu li a {
+	padding: 12px 20px;
+	color: #333;
+	font-size: 16px;
+	text-decoration: none;
+	display: block;
+	transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for dropdown links */
+.dropdown-menu li a:hover {
+	background-color: #f5f5f5;
+	color: #000;
+	font-weight: bold;
+}
+
+
+
+.tm-nav {
+	overflow: visible !important; /* Ensure the dropdown is not clipped */
+	position: relative;
+}
+
+#panelCart {
+	height: 80px;
 }

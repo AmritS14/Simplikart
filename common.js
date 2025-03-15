@@ -1,5 +1,3 @@
-
-
 function np() {
     return void(0);
 }
@@ -13,12 +11,12 @@ function showCart() {
 }
 
 function getCart(wchUserId) {
- $('#panelCart').load('get.cart.php', {userId: wchUserId});
+ $('#panelCart').load('getCart.php', {userId: wchUserId});
 }
 
 function addToCart(wchUserId, wchProductId) {
     $.ajax({
-        url: 'add.cart.php',
+        url: 'addToCart.php',
         type: 'POST',
         data: {userId: wchUserId, productId: wchProductId},
         success: function(response) {
